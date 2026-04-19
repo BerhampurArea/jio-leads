@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Jio – Register Interest</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #0037a5;
+  --red: #e31837;
+  --gold: #f5a800;
+  --dark: #050d2a;
+  --card: #ffffff;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --bg: #f0f4ff;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html, body { min-height:100vh; background:var(--bg); font-family:'Outfit',sans-serif; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(160deg, var(--dark) 0%, #0a1f6e 60%, #0037a5 100%);
+  padding: 28px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; top:-40px; right:-40px;
+  width:180px; height:180px;
+  border-radius:50%;
+  background: radial-gradient(circle, var(--red) 0%, transparent 70%);
+  opacity:0.3;
+}
+.hero::after {
+  content:'';
+  position:absolute; bottom:-30px; left:-20px;
+  width:120px; height:120px;
+  border-radius:50%;
+  background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+  opacity:0.25;
+}
+.jio-wordmark {
+  font-family:'Syne',sans-serif;
+  font-size:38px;
+  font-weight:800;
+  color:#fff;
+  letter-spacing:6px;
+  position:relative; z-index:1;
+}
+.jio-wordmark .dot { color:var(--gold); }
+.hero-sub {
+  font-size:12px;
+  color:rgba(255,255,255,0.55);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-top:4px;
+  position:relative; z-index:1;
+}
+.hero-tagline {
+  margin-top:16px;
+  font-size:17px;
+  color:rgba(255,255,255,0.9);
+  font-weight:500;
+  line-height:1.4;
+  position:relative; z-index:1;
+}
+.hero-tagline strong { color:var(--gold); }
+
+/* SERVICE PILLS */
+.pills-wrap {
+  padding: 20px 16px 4px;
+}
+.pills-label {
+  font-size:10px; font-weight:600;
+  text-transform:uppercase; letter-spacing:2px;
+  color:var(--muted); margin-bottom:10px;
+}
+.pills {
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+.pill {
+  flex:1; min-width:90px;
+  background:#fff;
+  border:2px solid var(--border);
+  border-radius:14px;
+  padding:14px 8px;
+  text-align:center;
+  cursor:pointer;
+  transition:all 0.18s ease;
+  position:relative;
+  user-select:none;
+}
+.pill:active { transform:scale(0.94); }
+.pill.on {
+  border-color:var(--blue);
+  background:linear-gradient(135deg,#e8f0ff,#dbeafe);
+  box-shadow:0 2px 12px rgba(0,55,165,0.15);
+}
+.pill .p-icon { font-size:24px; display:block; margin-bottom:5px; }
+.pill .p-title { font-size:13px; font-weight:600; color:var(--dark); }
+.pill .p-sub { font-size:10px; color:var(--muted); margin-top:1px; }
+.pill .tick {
+  position:absolute; top:7px; right:9px;
+  font-size:13px; color:var(--blue);
+  display:none; font-weight:700;
+}
+.pill.on .tick { display:block; }
+
+/* FORM */
+.form-wrap {
+  padding:16px 16px 32px;
+}
+.form-card {
+  background:#fff;
+  border-radius:20px;
+  padding:20px 16px;
+  box-shadow:0 4px 28px rgba(0,55,165,0.08);
+}
+.f-group { margin-bottom:16px; }
+.f-label {
+  display:block;
+  font-size:10px; font-weight:600;
+  text-transform:uppercase; letter-spacing:1.8px;
+  color:var(--muted); margin-bottom:7px;
+}
+.f-input, .f-select {
+  width:100%;
+  padding:13px 15px;
+  border:1.5px solid var(--border);
+  border-radius:12px;
+  font-family:'Outfit',sans-serif;
+  font-size:15px;
+  color:var(--dark);
+  background:#fafcff;
+  outline:none;
+  transition:border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance:none;
+}
+.f-input:focus, .f-select:focus {
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(0,55,165,0.08);
+  background:#fff;
+}
+.f-input::placeholder { color:#c0c8d8; }
+.f-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+/* MNP extra field */
+#mnpBlock { display:none; }
+
+/* SUBMIT */
+.submit-btn {
+  width:100%;
+  margin-top:8px;
+  background:linear-gradient(135deg, var(--red) 0%, #b5102a 100%);
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  padding:17px;
+  font-family:'Syne',sans-serif;
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:1px;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(227,24,55,0.35);
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+.submit-btn:active { transform:translateY(2px); box-shadow:0 3px 10px rgba(227,24,55,0.25); }
+
+/* SUCCESS */
+.success {
+  display:none;
+  text-align:center;
+  padding:40px 24px;
+  animation:fadeUp 0.4s ease;
+}
+.success.show { display:block; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.s-icon { font-size:56px; margin-bottom:12px; }
+.s-title {
+  font-family:'Syne',sans-serif;
+  font-size:26px; font-weight:800;
+  color:var(--dark);
+}
+.s-sub { font-size:14px; color:var(--muted); margin-top:6px; line-height:1.5; }
+.s-badge {
+  display:inline-block;
+  margin-top:16px;
+  background:linear-gradient(135deg,var(--blue),#0055cc);
+  color:#fff;
+  border-radius:30px;
+  padding:8px 22px;
+  font-size:13px; font-weight:600;
+}
+
+/* Consent */
+.consent {
+  font-size:11px; color:var(--muted);
+  text-align:center; margin-top:12px; line-height:1.6;
+}
+</style>
+</head>
+<body>
+
+<div id="mainView">
+  <div class="hero">
+    <div class="jio-wordmark">JIO<span class="dot">●</span></div>
+    <div class="hero-sub">Smart Store · Berhampur</div>
+    <div class="hero-tagline">Tell us what you need —<br>our team will call you <strong>within 24 hrs</strong></div>
+  </div>
+
+  <div class="pills-wrap">
+    <div class="pills-label">I'm interested in</div>
+    <div class="pills">
+      <div class="pill" onclick="toggle(this,'MNP')" data-s="MNP">
+        <span class="tick">✓</span>
+        <span class="p-icon">🔄</span>
+        <div class="p-title">MNP</div>
+        <div class="p-sub">Port to Jio</div>
+      </div>
+      <div class="pill" onclick="toggle(this,'New SIM')" data-s="New SIM">
+        <span class="tick">✓</span>
+        <span class="p-icon">📱</span>
+        <div class="p-title">New SIM</div>
+        <div class="p-sub">Pre / Post</div>
+      </div>
+      <div class="pill" onclick="toggle(this,'AirFiber')" data-s="AirFiber">
+        <span class="tick">✓</span>
+        <span class="p-icon">📡</span>
+        <div class="p-title">AirFiber</div>
+        <div class="p-sub">Home WiFi</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-wrap">
+    <div class="form-card">
+      <div class="f-group">
+        <label class="f-label">Your Name *</label>
+        <input class="f-input" id="name" type="text" placeholder="Full name" autocomplete="name">
+      </div>
+      <div class="f-group">
+        <label class="f-label">Mobile Number *</label>
+        <input class="f-input" id="mobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit number" autocomplete="tel">
+      </div>
+      <div class="f-row">
+        <div class="f-group">
+          <label class="f-label">Area / Locality</label>
+          <input class="f-input" id="area" type="text" placeholder="e.g. Town Hall">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Best Time</label>
+          <select class="f-select" id="time">
+            <option value="">Any time</option>
+            <option>Morning 9–12</option>
+            <option>Noon 12–3</option>
+            <option>Evening 4–7</option>
+          </select>
+        </div>
+      </div>
+      <div id="mnpBlock" class="f-group">
+        <label class="f-label">Current Operator</label>
+        <select class="f-select" id="operator">
+          <option value="">Select</option>
+          <option>Airtel</option>
+          <option>Vi (Vodafone-Idea)</option>
+          <option>BSNL</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <button class="submit-btn" onclick="submitForm()">SUBMIT →</button>
+      <div class="consent">By submitting, you agree to be contacted by Jio team for service assistance.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="success" id="successView">
+  <div class="s-icon">🙏</div>
+  <div class="s-title">Thank You!</div>
+  <div class="s-sub">Your details have been received.<br>Our Jio executive will contact you soon.</div>
+  <div class="s-badge">✓ Lead Registered Successfully</div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────
+// Using JSONBin.io as a free real-time store. 
+// REPLACE these with values from your own JSONBin account (free at jsonbin.io)
+const BIN_ID  = 'JIO_BERHAMPUR_BIN_ID';   // Replace after setup
+const API_KEY = 'JIO_API_KEY';             // Replace after setup
+// ────────────────────────────────────────────────────────
+
+let selected = [];
+
+function toggle(el, s) {
+  el.classList.toggle('on');
+  if (selected.includes(s)) selected = selected.filter(x => x !== s);
+  else selected.push(s);
+  document.getElementById('mnpBlock').style.display =
+    selected.includes('MNP') ? 'block' : 'none';
+}
+
+async function submitForm() {
+  const name   = document.getElementById('name').value.trim();
+  const mobile = document.getElementById('mobile').value.trim();
+  if (!name)              { alert('Please enter your name.'); return; }
+  if (!/^\d{10}$/.test(mobile)) { alert('Enter valid 10-digit mobile number.'); return; }
+  if (!selected.length)  { alert('Please select at least one service.'); return; }
+
+  const lead = {
+    ts: new Date().toISOString(),
+    name, mobile,
+    services: selected.join(', '),
+    area: document.getElementById('area').value.trim(),
+    time: document.getElementById('time').value,
+    operator: document.getElementById('operator').value,
+    source: 'QR-Scan'
+  };
+
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Saving…';
+  btn.disabled = true;
+
+  try {
+    // Get current bin data
+    const getRes = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+      headers: { 'X-Master-Key': API_KEY }
+    });
+    const getData = await getRes.json();
+    const existing = getData.record?.leads || [];
+    existing.push(lead);
+
+    // Update bin
+    await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+      body: JSON.stringify({ leads: existing })
+    });
+
+    document.getElementById('mainView').style.display = 'none';
+    document.getElementById('successView').classList.add('show');
+  } catch(e) {
+    // Fallback: store locally if offline
+    const local = JSON.parse(localStorage.getItem('pendingLeads') || '[]');
+    local.push(lead);
+    localStorage.setItem('pendingLeads', JSON.stringify(local));
+    document.getElementById('mainView').style.display = 'none';
+    document.getElementById('successView').classList.add('show');
+  }
+}
+</script>
+</body>
+</html>
